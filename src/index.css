@@ -88,22 +88,11 @@
   }
 
   .track-card:hover {
-    transform: translateY(-4px) scale(1.02);
     box-shadow: 0 12px 40px hsl(220 20% 10% / 0.12);
+    @apply ring-2 ring-primary/50;
   }
 
-  .track-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-glow);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
 
-  .track-card:hover::before {
-    opacity: 1;
-  }
 
   .progress-track {
     @apply h-1 w-full rounded-full bg-muted overflow-hidden;

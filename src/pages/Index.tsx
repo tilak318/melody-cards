@@ -32,26 +32,19 @@ const Index = () => {
 
       {/* Header */}
       <header className="relative z-10 px-4 py-8 md:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-md">
-              <Music className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <h1 className="text-2xl font-bold gradient-text">SoundWave</h1>
+        <div className="mx-auto max-w-[1600px]">
+          <div className="flex items-center justify-center mb-2">
+            <h1 className="text-2xl font-bold gradient-text">Akshardham Daily Rituals</h1>
           </div>
-          <p className="text-muted-foreground mt-4 max-w-lg">
-            Your personal music player. Click on any track to start listening.
-          </p>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="relative z-10 px-4 md:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-xl font-semibold text-foreground mb-6">Your Library</h2>
-          
+        <div className="mx-auto max-w-[1600px]">
+
           {/* Track Grid */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {tracks.map((track, index) => (
               <div
                 key={track.id}
