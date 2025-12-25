@@ -17,10 +17,10 @@ const formatDuration = (seconds: number) => {
 export const TrackCard = ({ track, isActive, isPlaying, onPlay }: TrackCardProps) => {
   return (
     <div
-      className={`track-card group cursor-pointer ${isActive ? "ring-2 ring-primary/50" : ""}`}
+      className={`track-card group cursor-pointer min-h-[80px] ${isActive ? "ring-2 ring-primary/50" : ""}`}
       onClick={() => onPlay(track)}
     >
-      <div className="p-4 flex items-center justify-between">
+      <div className="p-4 flex items-center justify-between h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="play-button h-10 w-10 flex-shrink-0">
             {isActive && isPlaying ? (
