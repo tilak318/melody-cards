@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Track } from "@/types/track";
+import { tracks } from "@/data/tracks";
+
+export type LoopMode = "none" | "all" | "one";
 
 export const useAudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7);
+  const [loopMode, setLoopMode] = useState<LoopMode>("none");
+  const [shuffle, setShuffle] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio();
@@ -26,8 +32,20 @@ export const useAudioPlayer = () => {
     };
 
     const handleEnded = () => {
-      setIsPlaying(false);
-      setProgress(0);
+      if (loopMode === "one") {
+        audio.currentTime = 0;
+        audio.play();
+      } else if (loopMode === "all" || shuffle) {
+        playNext();
+      } else {
+        // Check if there's a next track
+        if (currentIndex < tracks.length - 1) {
+          playNext();
+        } else {
+          setIsPlaying(false);
+          setProgress(0);
+        }
+      }
     };
 
     const handleError = () => {
@@ -47,7 +65,7 @@ export const useAudioPlayer = () => {
       audio.removeEventListener("error", handleError);
       audio.pause();
     };
-  }, []);
+  }, [loopMode, shuffle, currentIndex]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -55,8 +73,24 @@ export const useAudioPlayer = () => {
     }
   }, [volume]);
 
+  const playTrackAtIndex = useCallback((index: number) => {
+    if (!audioRef.current || index < 0 || index >= tracks.length) return;
+    
+    const track = tracks[index];
+    audioRef.current.src = track.audioUrl;
+    audioRef.current.play().catch(() => {
+      console.log("Could not play audio. Make sure the file exists.");
+    });
+    setCurrentTrack(track);
+    setCurrentIndex(index);
+    setIsPlaying(true);
+    setProgress(0);
+  }, []);
+
   const playTrack = useCallback((track: Track) => {
     if (!audioRef.current) return;
+
+    const index = tracks.findIndex(t => t.id === track.id);
 
     if (currentTrack?.id === track.id) {
       if (isPlaying) {
@@ -69,15 +103,9 @@ export const useAudioPlayer = () => {
         setIsPlaying(true);
       }
     } else {
-      audioRef.current.src = track.audioUrl;
-      audioRef.current.play().catch(() => {
-        console.log("Could not play audio. Make sure the file exists.");
-      });
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      setProgress(0);
+      playTrackAtIndex(index);
     }
-  }, [currentTrack, isPlaying]);
+  }, [currentTrack, isPlaying, playTrackAtIndex]);
 
   const togglePlay = useCallback(() => {
     if (!audioRef.current || !currentTrack) return;
@@ -93,6 +121,26 @@ export const useAudioPlayer = () => {
     }
   }, [currentTrack, isPlaying]);
 
+  const playNext = useCallback(() => {
+    if (shuffle) {
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      playTrackAtIndex(randomIndex);
+    } else {
+      const nextIndex = currentIndex >= tracks.length - 1 ? 0 : currentIndex + 1;
+      playTrackAtIndex(nextIndex);
+    }
+  }, [currentIndex, shuffle, playTrackAtIndex]);
+
+  const playPrevious = useCallback(() => {
+    if (audioRef.current && audioRef.current.currentTime > 3) {
+      audioRef.current.currentTime = 0;
+      return;
+    }
+    
+    const prevIndex = currentIndex <= 0 ? tracks.length - 1 : currentIndex - 1;
+    playTrackAtIndex(prevIndex);
+  }, [currentIndex, playTrackAtIndex]);
+
   const seekTo = useCallback((percentage: number) => {
     if (!audioRef.current || !duration) return;
     const time = (percentage / 100) * duration;
@@ -104,15 +152,33 @@ export const useAudioPlayer = () => {
     setVolume(newVolume);
   }, []);
 
+  const toggleLoopMode = useCallback(() => {
+    setLoopMode(prev => {
+      if (prev === "none") return "all";
+      if (prev === "all") return "one";
+      return "none";
+    });
+  }, []);
+
+  const toggleShuffle = useCallback(() => {
+    setShuffle(prev => !prev);
+  }, []);
+
   return {
     currentTrack,
     isPlaying,
     progress,
     duration,
     volume,
+    loopMode,
+    shuffle,
     playTrack,
     togglePlay,
+    playNext,
+    playPrevious,
     seekTo,
     changeVolume,
+    toggleLoopMode,
+    toggleShuffle,
   };
 };
