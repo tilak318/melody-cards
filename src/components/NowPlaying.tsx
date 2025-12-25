@@ -1,15 +1,22 @@
 import { Track } from "@/types/track";
-import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, Repeat, Repeat1, Shuffle } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { LoopMode } from "@/hooks/useAudioPlayer";
 
 interface NowPlayingProps {
   track: Track | null;
   isPlaying: boolean;
   progress: number;
   volume: number;
+  loopMode: LoopMode;
+  shuffle: boolean;
   onTogglePlay: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
   onSeek: (value: number) => void;
   onVolumeChange: (value: number) => void;
+  onToggleLoop: () => void;
+  onToggleShuffle: () => void;
 }
 
 const formatTime = (seconds: number) => {
@@ -23,13 +30,19 @@ export const NowPlaying = ({
   isPlaying,
   progress,
   volume,
+  loopMode,
+  shuffle,
   onTogglePlay,
+  onNext,
+  onPrevious,
   onSeek,
   onVolumeChange,
+  onToggleLoop,
+  onToggleShuffle,
 }: NowPlayingProps) => {
   if (!track) {
     return (
-      <div className="glass fixed bottom-0 left-0 right-0 h-24 flex items-center justify-center">
+      <div className="glass fixed bottom-0 left-0 right-0 h-24 flex items-center justify-center border-t border-border">
         <p className="text-muted-foreground">Select a track to play</p>
       </div>
     );
@@ -38,11 +51,11 @@ export const NowPlaying = ({
   const currentTime = (progress / 100) * track.duration;
 
   return (
-    <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up">
+    <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up border-t border-border">
       <div className="mx-auto flex max-w-7xl items-center gap-4">
         {/* Track Info */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className={`relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg ${isPlaying ? "animate-pulse-glow" : ""}`}>
+          <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg shadow-md">
             <img
               src={track.coverUrl}
               alt={track.title}
@@ -57,13 +70,34 @@ export const NowPlaying = ({
 
         {/* Controls */}
         <div className="flex flex-col items-center gap-2 flex-1">
-          <div className="flex items-center gap-4">
-            <button className="text-muted-foreground transition-colors hover:text-foreground">
-              <SkipBack className="h-5 w-5" />
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Shuffle */}
+            <button
+              onClick={onToggleShuffle}
+              className={`p-2 rounded-full transition-colors ${
+                shuffle 
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              title="Shuffle"
+            >
+              <Shuffle className="h-4 w-4" />
             </button>
+
+            {/* Previous */}
+            <button 
+              onClick={onPrevious}
+              className="text-muted-foreground transition-colors hover:text-foreground p-2"
+              title="Previous"
+            >
+              <SkipBack className="h-5 w-5" fill="currentColor" />
+            </button>
+
+            {/* Play/Pause */}
             <button
               onClick={onTogglePlay}
               className="play-button h-12 w-12"
+              title={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
                 <Pause className="h-5 w-5 text-primary-foreground" fill="currentColor" />
@@ -71,8 +105,31 @@ export const NowPlaying = ({
                 <Play className="h-5 w-5 text-primary-foreground ml-0.5" fill="currentColor" />
               )}
             </button>
-            <button className="text-muted-foreground transition-colors hover:text-foreground">
-              <SkipForward className="h-5 w-5" />
+
+            {/* Next */}
+            <button 
+              onClick={onNext}
+              className="text-muted-foreground transition-colors hover:text-foreground p-2"
+              title="Next"
+            >
+              <SkipForward className="h-5 w-5" fill="currentColor" />
+            </button>
+
+            {/* Loop */}
+            <button
+              onClick={onToggleLoop}
+              className={`p-2 rounded-full transition-colors ${
+                loopMode !== "none" 
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              title={loopMode === "none" ? "Enable loop" : loopMode === "all" ? "Loop all" : "Loop one"}
+            >
+              {loopMode === "one" ? (
+                <Repeat1 className="h-4 w-4" />
+              ) : (
+                <Repeat className="h-4 w-4" />
+              )}
             </button>
           </div>
 

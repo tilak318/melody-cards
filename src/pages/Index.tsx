@@ -10,25 +10,31 @@ const Index = () => {
     isPlaying,
     progress,
     volume,
+    loopMode,
+    shuffle,
     playTrack,
     togglePlay,
+    playNext,
+    playPrevious,
     seekTo,
     changeVolume,
+    toggleLoopMode,
+    toggleShuffle,
   } = useAudioPlayer();
 
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Background Gradient */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/10 via-transparent to-transparent blur-3xl" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/10 via-transparent to-transparent blur-3xl" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent blur-3xl" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/5 via-transparent to-transparent blur-3xl" />
       </div>
 
       {/* Header */}
       <header className="relative z-10 px-4 py-8 md:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-md">
               <Music className="h-5 w-5 text-primary-foreground" />
             </div>
             <h1 className="text-2xl font-bold gradient-text">SoundWave</h1>
@@ -63,7 +69,7 @@ const Index = () => {
           </div>
 
           {/* Instructions */}
-          <div className="mt-12 glass rounded-2xl p-6">
+          <div className="mt-12 bg-card rounded-2xl p-6 border border-border shadow-sm">
             <h3 className="font-semibold text-foreground mb-3">Add Your Music</h3>
             <p className="text-sm text-muted-foreground">
               To add your own audio files:
@@ -83,9 +89,15 @@ const Index = () => {
         isPlaying={isPlaying}
         progress={progress}
         volume={volume}
+        loopMode={loopMode}
+        shuffle={shuffle}
         onTogglePlay={togglePlay}
+        onNext={playNext}
+        onPrevious={playPrevious}
         onSeek={seekTo}
         onVolumeChange={changeVolume}
+        onToggleLoop={toggleLoopMode}
+        onToggleShuffle={toggleShuffle}
       />
     </div>
   );
