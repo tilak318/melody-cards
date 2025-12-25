@@ -55,16 +55,8 @@ export const NowPlaying = ({
       <div className="mx-auto flex max-w-7xl items-center gap-4">
         {/* Track Info */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg shadow-md">
-            <img
-              src={track.coverUrl}
-              alt={track.title}
-              className="h-full w-full object-cover"
-            />
-          </div>
           <div className="min-w-0">
             <h4 className="font-medium text-foreground truncate">{track.title}</h4>
-            <p className="text-sm text-muted-foreground truncate">{track.artist}</p>
           </div>
         </div>
 
@@ -74,18 +66,17 @@ export const NowPlaying = ({
             {/* Shuffle */}
             <button
               onClick={onToggleShuffle}
-              className={`p-2 rounded-full transition-colors ${
-                shuffle 
-                  ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              className={`p-2 rounded-full transition-colors ${shuffle
+                ? "text-primary bg-primary/10"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
               title="Shuffle"
             >
               <Shuffle className="h-4 w-4" />
             </button>
 
             {/* Previous */}
-            <button 
+            <button
               onClick={onPrevious}
               className="text-muted-foreground transition-colors hover:text-foreground p-2"
               title="Previous"
@@ -107,7 +98,7 @@ export const NowPlaying = ({
             </button>
 
             {/* Next */}
-            <button 
+            <button
               onClick={onNext}
               className="text-muted-foreground transition-colors hover:text-foreground p-2"
               title="Next"
@@ -118,11 +109,10 @@ export const NowPlaying = ({
             {/* Loop */}
             <button
               onClick={onToggleLoop}
-              className={`p-2 rounded-full transition-colors ${
-                loopMode !== "none" 
-                  ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              className={`p-2 rounded-full transition-colors ${loopMode !== "none"
+                ? "text-primary bg-primary/10"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
               title={loopMode === "none" ? "Enable loop" : loopMode === "all" ? "Loop all" : "Loop one"}
             >
               {loopMode === "one" ? (

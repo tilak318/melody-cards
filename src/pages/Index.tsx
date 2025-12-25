@@ -1,10 +1,15 @@
-import { Music } from "lucide-react";
-import { tracks } from "@/data/tracks";
+import { Music, ArrowLeft } from "lucide-react";
+import { tracks, albums } from "@/data/tracks";
 import { TrackCard } from "@/components/TrackCard";
+import { AlbumCard } from "@/components/AlbumCard";
 import { NowPlaying } from "@/components/NowPlaying";
 import { useAudioPlayer } from "@/hooks/useAudioPlayer";
+import { Album } from "@/types/track";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+
   const {
     currentTrack,
     isPlaying,
@@ -21,6 +26,8 @@ const Index = () => {
     toggleLoopMode,
     toggleShuffle,
   } = useAudioPlayer();
+
+  const displayTracks = selectedAlbum ? selectedAlbum.tracks : tracks;
 
   return (
     <div className="min-h-screen bg-background pb-28">
@@ -42,15 +49,28 @@ const Index = () => {
       {/* Main Content */}
       <main className="relative z-10 px-4 md:px-8">
         <div className="mx-auto max-w-[1600px]">
+          {/* Back Button */}
+          {selectedAlbum && (
+            <button
+              onClick={() => setSelectedAlbum(null)}
+              className="mb-6 flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              <span className="font-semibold">Back to Main</span>
+            </button>
+          )}
+
+          {/* Section Title */}
+          {selectedAlbum && (
+            <h2 className="text-xl font-semibold text-foreground mb-6">
+              {selectedAlbum.title}
+            </h2>
+          )}
 
           {/* Track Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {tracks.map((track, index) => (
-              <div
-                key={track.id}
-                className="animate-slide-up"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
+            {displayTracks.map((track, index) => (
+              <div key={track.id}>
                 <TrackCard
                   track={track}
                   isActive={currentTrack?.id === track.id}
@@ -61,18 +81,19 @@ const Index = () => {
             ))}
           </div>
 
-          {/* Instructions */}
-          <div className="mt-12 bg-card rounded-2xl p-6 border border-border shadow-sm">
-            <h3 className="font-semibold text-foreground mb-3">Add Your Music</h3>
-            <p className="text-sm text-muted-foreground">
-              To add your own audio files:
-            </p>
-            <ol className="mt-2 text-sm text-muted-foreground list-decimal list-inside space-y-1">
-              <li>Create a folder called <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded">audio</code> inside the <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded">public</code> directory</li>
-              <li>Add your MP3 files (e.g., track1.mp3, track2.mp3)</li>
-              <li>Update the <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded">audioUrl</code> in <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded">src/data/tracks.ts</code></li>
-            </ol>
-          </div>
+          {/* Albums Section */}
+          {!selectedAlbum && (
+            <>
+              <h2 className="text-xl font-semibold text-foreground mt-12 mb-6">Albums</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {albums.map((album, index) => (
+                  <div key={album.id}>
+                    <AlbumCard album={album} onClick={setSelectedAlbum} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </main>
 

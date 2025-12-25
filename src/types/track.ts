@@ -7,3 +7,10 @@ export interface Track {
   coverUrl: string;
   audioUrl: string;
 }
+
+export interface Album {
+  id: string;
+  title: string;
+  tracks: Track[];
+}
+

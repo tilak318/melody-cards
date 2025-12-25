@@ -1,4 +1,4 @@
-import { Track } from "@/types/track";
+import { Track, Album } from "@/types/track";
 
 // Akshardham Daily Rituals tracks
 // You can place audio files in the public folder and reference them as "/filename.mp3"
@@ -65,5 +65,174 @@ export const tracks: Track[] = [
     duration: 300,
     coverUrl: "",
     audioUrl: "/audio/chesta.mp3",
+  },
+];
+
+// Albums with their tracks
+export const albums: Album[] = [
+  {
+    id: "album-1",
+    title: "Prabhatiya",
+    tracks: [
+      {
+        id: "prabhatiya-1",
+        title: "Prabhatiya Track 1",
+        artist: "Akshardham",
+        album: "Prabhatiya",
+        duration: 240,
+        coverUrl: "",
+        audioUrl: "/audio/prabhatiya/track1.mp3",
+      },
+      {
+        id: "prabhatiya-2",
+        title: "Prabhatiya Track 2",
+        artist: "Akshardham",
+        album: "Prabhatiya",
+        duration: 260,
+        coverUrl: "",
+        audioUrl: "/audio/prabhatiya/track2.mp3",
+      },
+      {
+        id: "prabhatiya-3",
+        title: "Prabhatiya Track 3",
+        artist: "Akshardham",
+        album: "Prabhatiya",
+        duration: 280,
+        coverUrl: "",
+        audioUrl: "/audio/prabhatiya/track3.mp3",
+      },
+    ],
+  },
+  {
+    id: "album-2",
+    title: "Kirtan",
+    tracks: [
+      {
+        id: "kirtan-1",
+        title: "Kirtan Track 1",
+        artist: "Akshardham",
+        album: "Kirtan",
+        duration: 300,
+        coverUrl: "",
+        audioUrl: "/audio/kirtan/track1.mp3",
+      },
+      {
+        id: "kirtan-2",
+        title: "Kirtan Track 2",
+        artist: "Akshardham",
+        album: "Kirtan",
+        duration: 320,
+        coverUrl: "",
+        audioUrl: "/audio/kirtan/track2.mp3",
+      },
+      {
+        id: "kirtan-3",
+        title: "Kirtan Track 3",
+        artist: "Akshardham",
+        album: "Kirtan",
+        duration: 290,
+        coverUrl: "",
+        audioUrl: "/audio/kirtan/track3.mp3",
+      },
+    ],
+  },
+  {
+    id: "album-3",
+    title: "Thal Kirtan",
+    tracks: [
+      {
+        id: "thal-kirtan-1",
+        title: "Thal Kirtan Track 1",
+        artist: "Akshardham",
+        album: "Thal Kirtan",
+        duration: 250,
+        coverUrl: "",
+        audioUrl: "/audio/thal-kirtan/track1.mp3",
+      },
+      {
+        id: "thal-kirtan-2",
+        title: "Thal Kirtan Track 2",
+        artist: "Akshardham",
+        album: "Thal Kirtan",
+        duration: 270,
+        coverUrl: "",
+        audioUrl: "/audio/thal-kirtan/track2.mp3",
+      },
+      {
+        id: "thal-kirtan-3",
+        title: "Thal Kirtan Track 3",
+        artist: "Akshardham",
+        album: "Thal Kirtan",
+        duration: 310,
+        coverUrl: "",
+        audioUrl: "/audio/thal-kirtan/track3.mp3",
+      },
+    ],
+  },
+  {
+    id: "album-4",
+    title: "Katha",
+    tracks: [
+      {
+        id: "katha-1",
+        title: "Katha Track 1",
+        artist: "Akshardham",
+        album: "Katha",
+        duration: 600,
+        coverUrl: "",
+        audioUrl: "/audio/katha/track1.mp3",
+      },
+      {
+        id: "katha-2",
+        title: "Katha Track 2",
+        artist: "Akshardham",
+        album: "Katha",
+        duration: 650,
+        coverUrl: "",
+        audioUrl: "/audio/katha/track2.mp3",
+      },
+      {
+        id: "katha-3",
+        title: "Katha Track 3",
+        artist: "Akshardham",
+        album: "Katha",
+        duration: 580,
+        coverUrl: "",
+        audioUrl: "/audio/katha/track3.mp3",
+      },
+    ],
+  },
+  {
+    id: "album-5",
+    title: "Instrumentals",
+    tracks: [
+      {
+        id: "instrumental-1",
+        title: "Instrumental Track 1",
+        artist: "Akshardham",
+        album: "Instrumentals",
+        duration: 220,
+        coverUrl: "",
+        audioUrl: "/audio/instrumentals/track1.mp3",
+      },
+      {
+        id: "instrumental-2",
+        title: "Instrumental Track 2",
+        artist: "Akshardham",
+        album: "Instrumentals",
+        duration: 240,
+        coverUrl: "",
+        audioUrl: "/audio/instrumentals/track2.mp3",
+      },
+      {
+        id: "instrumental-3",
+        title: "Instrumental Track 3",
+        artist: "Akshardham",
+        album: "Instrumentals",
+        duration: 260,
+        coverUrl: "",
+        audioUrl: "/audio/instrumentals/track3.mp3",
+      },
+    ],
   },
 ];
