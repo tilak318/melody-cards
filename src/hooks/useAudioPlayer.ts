@@ -15,67 +15,9 @@ export const useAudioPlayer = () => {
   const [loopMode, setLoopMode] = useState<LoopMode>("none");
   const [shuffle, setShuffle] = useState(false);
 
-  useEffect(() => {
-    audioRef.current = new Audio();
-    audioRef.current.volume = volume;
-
-    const audio = audioRef.current;
-
-    const handleTimeUpdate = () => {
-      if (audio.duration) {
-        setProgress((audio.currentTime / audio.duration) * 100);
-      }
-    };
-
-    const handleLoadedMetadata = () => {
-      setDuration(audio.duration);
-    };
-
-    const handleEnded = () => {
-      if (loopMode === "one") {
-        audio.currentTime = 0;
-        audio.play();
-      } else if (loopMode === "all" || shuffle) {
-        playNext();
-      } else {
-        // Check if there's a next track
-        if (currentIndex < tracks.length - 1) {
-          playNext();
-        } else {
-          setIsPlaying(false);
-          setProgress(0);
-        }
-      }
-    };
-
-    const handleError = () => {
-      console.log("Audio file not found. Please add your audio files to the public/audio folder.");
-      setIsPlaying(false);
-    };
-
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.addEventListener("ended", handleEnded);
-    audio.addEventListener("error", handleError);
-
-    return () => {
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
-      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.removeEventListener("ended", handleEnded);
-      audio.removeEventListener("error", handleError);
-      audio.pause();
-    };
-  }, [loopMode, shuffle, currentIndex]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
-
   const playTrackAtIndex = useCallback((index: number) => {
     if (!audioRef.current || index < 0 || index >= tracks.length) return;
-    
+
     const track = tracks[index];
     audioRef.current.src = track.audioUrl;
     audioRef.current.play().catch(() => {
@@ -136,7 +78,7 @@ export const useAudioPlayer = () => {
       audioRef.current.currentTime = 0;
       return;
     }
-    
+
     const prevIndex = currentIndex <= 0 ? tracks.length - 1 : currentIndex - 1;
     playTrackAtIndex(prevIndex);
   }, [currentIndex, playTrackAtIndex]);
@@ -163,6 +105,73 @@ export const useAudioPlayer = () => {
   const toggleShuffle = useCallback(() => {
     setShuffle(prev => !prev);
   }, []);
+
+  useEffect(() => {
+    const audio = new Audio();
+    audio.volume = volume;
+    audioRef.current = audio;
+
+    const handleTimeUpdate = () => {
+      if (audio.duration) {
+        setProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleError = (e: ErrorEvent) => {
+      console.error("Audio error:", e);
+      console.log("Audio file not found or could not be loaded:", audio.src);
+      setIsPlaying(false);
+    };
+
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("error", handleError as any);
+
+    return () => {
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("error", handleError as any);
+      audio.pause();
+      audio.src = "";
+      audioRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      if (loopMode === "one") {
+        audio.currentTime = 0;
+        audio.play().catch(err => console.error("Error playing next track:", err));
+      } else if (loopMode === "all" || shuffle) {
+        playNext();
+      } else {
+        if (currentIndex < tracks.length - 1) {
+          playNext();
+        } else {
+          setIsPlaying(false);
+          setProgress(0);
+        }
+      }
+    };
+
+    audio.addEventListener("ended", handleEnded);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [loopMode, shuffle, currentIndex, playNext]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   return {
     currentTrack,

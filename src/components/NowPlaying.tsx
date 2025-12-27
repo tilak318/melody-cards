@@ -10,6 +10,7 @@ interface NowPlayingProps {
   volume: number;
   loopMode: LoopMode;
   shuffle: boolean;
+  duration: number;
   onTogglePlay: () => void;
   onNext: () => void;
   onPrevious: () => void;
@@ -29,6 +30,7 @@ export const NowPlaying = ({
   track,
   isPlaying,
   progress,
+  duration,
   volume,
   loopMode,
   shuffle,
@@ -48,7 +50,7 @@ export const NowPlaying = ({
     );
   }
 
-  const currentTime = (progress / 100) * track.duration;
+  const currentTime = (progress / 100) * (duration || track.duration);
 
   return (
     <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up border-t border-border">
@@ -138,7 +140,7 @@ export const NowPlaying = ({
               />
             </div>
             <span className="text-xs text-muted-foreground w-10">
-              {formatTime(track.duration)}
+              {formatTime(duration || track.duration)}
             </span>
           </div>
         </div>

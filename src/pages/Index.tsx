@@ -14,6 +14,7 @@ const Index = () => {
     currentTrack,
     isPlaying,
     progress,
+    duration,
     volume,
     loopMode,
     shuffle,
@@ -102,6 +103,7 @@ const Index = () => {
         track={currentTrack}
         isPlaying={isPlaying}
         progress={progress}
+        duration={duration}
         volume={volume}
         loopMode={loopMode}
         shuffle={shuffle}

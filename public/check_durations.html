@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+const files = [
+  "/audio/Nididhyasan.mp3",
+  "/audio/Shangar_Arti_with_Nididhyasan.mp3",
+  "/audio/Sandhya_Arti_with_Nididhyasan.mp3",
+  "/audio/MSM_Dhun.mp3",
+  "/audio/PSM_Dhun.mp3",
+  "/audio/Chesta_PSM.mp3",
+  "/audio/instrumental/Instrumental Divinity 2.mp3",
+  "/audio/prabhatiya/Prabhatiya.mp3",
+  "/audio/thal kirtan/Gwal bal lal.mp3",
+  "/audio/thal kirtan/Jamo Jamo re mara thakariya.mp3",
+  "/audio/thal kirtan/Jamo ne jamadu.mp3",
+  "/audio/thal kirtan/Jamo ne thal jivan.mp3",
+  "/audio/thal kirtan/Leta jao re.mp3",
+  "/audio/thal kirtan/Rudi randhi me.mp3",
+  "/audio/thal kirtan/Vasyo chee.mp3"
+];
+
+async function getDurations() {
+  const results = [];
+  for (const file of files) {
+    try {
+      const audio = new Audio(file);
+      await new Promise((resolve, reject) => {
+        audio.onloadedmetadata = () => resolve();
+        audio.onerror = () => reject(new Error("Failed to load " + file));
+        // Timeout after 10 seconds
+        setTimeout(() => reject(new Error("Timeout loading " + file)), 10000);
+      });
+      results.push({ file, duration: Math.round(audio.duration) });
+    } catch (e) {
+      results.push({ file, error: e.message });
+    }
+  }
+  document.body.innerHTML = "<pre>" + JSON.stringify(results, null, 2) + "</pre>";
+  console.log(JSON.stringify(results));
+}
+
+getDurations();
+</script>
+</body>
+</html>
