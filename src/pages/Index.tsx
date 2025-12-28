@@ -76,7 +76,7 @@ const Index = () => {
                   track={track}
                   isActive={currentTrack?.id === track.id}
                   isPlaying={currentTrack?.id === track.id && isPlaying}
-                  onPlay={playTrack}
+                  onPlay={(track) => playTrack(track, displayTracks)}
                 />
               </div>
             ))}

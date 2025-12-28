@@ -6,6 +6,7 @@ export type LoopMode = "none" | "all" | "one";
 
 export const useAudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [currentPlaylist, setCurrentPlaylist] = useState<Track[]>(tracks);
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -15,24 +16,26 @@ export const useAudioPlayer = () => {
   const [loopMode, setLoopMode] = useState<LoopMode>("none");
   const [shuffle, setShuffle] = useState(false);
 
-  const playTrackAtIndex = useCallback((index: number) => {
-    if (!audioRef.current || index < 0 || index >= tracks.length) return;
+  const playTrackAtIndex = useCallback((index: number, playlist: Track[] = currentPlaylist) => {
+    if (!audioRef.current || index < 0 || index >= playlist.length) return;
 
-    const track = tracks[index];
+    const track = playlist[index];
     audioRef.current.src = track.audioUrl;
     audioRef.current.play().catch(() => {
       console.log("Could not play audio. Make sure the file exists.");
     });
     setCurrentTrack(track);
     setCurrentIndex(index);
+    setCurrentPlaylist(playlist);
     setIsPlaying(true);
     setProgress(0);
-  }, []);
+  }, [currentPlaylist]);
 
-  const playTrack = useCallback((track: Track) => {
+  const playTrack = useCallback((track: Track, playlist?: Track[]) => {
     if (!audioRef.current) return;
 
-    const index = tracks.findIndex(t => t.id === track.id);
+    const activePlaylist = playlist || (currentPlaylist.some(t => t.id === track.id) ? currentPlaylist : tracks);
+    const index = activePlaylist.findIndex(t => t.id === track.id);
 
     if (currentTrack?.id === track.id) {
       if (isPlaying) {
@@ -45,9 +48,9 @@ export const useAudioPlayer = () => {
         setIsPlaying(true);
       }
     } else {
-      playTrackAtIndex(index);
+      playTrackAtIndex(index, activePlaylist);
     }
-  }, [currentTrack, isPlaying, playTrackAtIndex]);
+  }, [currentTrack, isPlaying, playTrackAtIndex, currentPlaylist]);
 
   const togglePlay = useCallback(() => {
     if (!audioRef.current || !currentTrack) return;
@@ -65,13 +68,13 @@ export const useAudioPlayer = () => {
 
   const playNext = useCallback(() => {
     if (shuffle) {
-      const randomIndex = Math.floor(Math.random() * tracks.length);
+      const randomIndex = Math.floor(Math.random() * currentPlaylist.length);
       playTrackAtIndex(randomIndex);
     } else {
-      const nextIndex = currentIndex >= tracks.length - 1 ? 0 : currentIndex + 1;
+      const nextIndex = currentIndex >= currentPlaylist.length - 1 ? 0 : currentIndex + 1;
       playTrackAtIndex(nextIndex);
     }
-  }, [currentIndex, shuffle, playTrackAtIndex]);
+  }, [currentIndex, shuffle, playTrackAtIndex, currentPlaylist]);
 
   const playPrevious = useCallback(() => {
     if (audioRef.current && audioRef.current.currentTime > 3) {
@@ -79,9 +82,9 @@ export const useAudioPlayer = () => {
       return;
     }
 
-    const prevIndex = currentIndex <= 0 ? tracks.length - 1 : currentIndex - 1;
+    const prevIndex = currentIndex <= 0 ? currentPlaylist.length - 1 : currentIndex - 1;
     playTrackAtIndex(prevIndex);
-  }, [currentIndex, playTrackAtIndex]);
+  }, [currentIndex, playTrackAtIndex, currentPlaylist]);
 
   const seekTo = useCallback((percentage: number) => {
     if (!audioRef.current || !duration) return;
@@ -152,7 +155,7 @@ export const useAudioPlayer = () => {
       } else if (loopMode === "all" || shuffle) {
         playNext();
       } else {
-        if (currentIndex < tracks.length - 1) {
+        if (currentIndex < currentPlaylist.length - 1) {
           playNext();
         } else {
           setIsPlaying(false);
