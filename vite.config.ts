@@ -15,10 +15,10 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["audio/**/*", "icon-512x512.png"],
+      includeAssets: ["icon-512x512.png"],
       manifest: {
         name: "Akshardham Daily Rituals",
-        short_name: "Akshardham",
+        short_name: "ADR",
         description: "Listen to daily rituals, kirtans, and spiritual audio tracks from Akshardham",
         theme_color: "#3B82F6",
         background_color: "#0F172A",
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,mp3}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
