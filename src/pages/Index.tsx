@@ -16,16 +16,12 @@ const Index = () => {
     progress,
     duration,
     volume,
-    loopMode,
-    shuffle,
     playTrack,
     togglePlay,
     playNext,
     playPrevious,
     seekTo,
     changeVolume,
-    toggleLoopMode,
-    toggleShuffle,
   } = useAudioPlayer();
 
   const displayTracks = selectedAlbum ? selectedAlbum.tracks : tracks;
@@ -105,15 +101,11 @@ const Index = () => {
         progress={progress}
         duration={duration}
         volume={volume}
-        loopMode={loopMode}
-        shuffle={shuffle}
         onTogglePlay={togglePlay}
         onNext={playNext}
         onPrevious={playPrevious}
         onSeek={seekTo}
         onVolumeChange={changeVolume}
-        onToggleLoop={toggleLoopMode}
-        onToggleShuffle={toggleShuffle}
       />
     </div>
   );

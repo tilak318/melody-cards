@@ -149,26 +149,23 @@ export const useAudioPlayer = () => {
     if (!audio) return;
 
     const handleEnded = () => {
-      if (loopMode === "one") {
+      // Check if current track should loop forever
+      if (currentTrack?.loopForever) {
         audio.currentTime = 0;
-        audio.play().catch(err => console.error("Error playing next track:", err));
-      } else if (loopMode === "all" || shuffle) {
-        playNext();
-      } else {
-        if (currentIndex < currentPlaylist.length - 1) {
-          playNext();
-        } else {
-          setIsPlaying(false);
-          setProgress(0);
-        }
+        audio.play().catch(err => console.error("Error looping track:", err));
+        return;
       }
+
+      // For all other tracks, just stop when finished
+      setIsPlaying(false);
+      setProgress(0);
     };
 
     audio.addEventListener("ended", handleEnded);
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [loopMode, shuffle, currentIndex, playNext]);
+  }, [loopMode, shuffle, currentIndex, playNext, currentTrack]);
 
   useEffect(() => {
     if (audioRef.current) {

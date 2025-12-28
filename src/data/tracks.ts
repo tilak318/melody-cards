@@ -38,6 +38,7 @@ export const tracks: Track[] = [
     duration: 1204,
     coverUrl: "",
     audioUrl: "/audio/MSM_Dhun.mp3",
+    loopForever: true,
   },
   {
     id: "5",
@@ -47,6 +48,7 @@ export const tracks: Track[] = [
     duration: 1215,
     coverUrl: "",
     audioUrl: "/audio/PSM_Dhun.mp3",
+    loopForever: true,
   },
   {
     id: "6",

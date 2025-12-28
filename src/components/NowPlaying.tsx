@@ -1,23 +1,18 @@
 import { Track } from "@/types/track";
-import { Play, Pause, SkipBack, SkipForward, Volume2, Repeat, Repeat1, Shuffle } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { LoopMode } from "@/hooks/useAudioPlayer";
 
 interface NowPlayingProps {
   track: Track | null;
   isPlaying: boolean;
   progress: number;
   volume: number;
-  loopMode: LoopMode;
-  shuffle: boolean;
   duration: number;
   onTogglePlay: () => void;
   onNext: () => void;
   onPrevious: () => void;
   onSeek: (value: number) => void;
   onVolumeChange: (value: number) => void;
-  onToggleLoop: () => void;
-  onToggleShuffle: () => void;
 }
 
 const formatTime = (seconds: number) => {
@@ -32,15 +27,11 @@ export const NowPlaying = ({
   progress,
   duration,
   volume,
-  loopMode,
-  shuffle,
   onTogglePlay,
   onNext,
   onPrevious,
   onSeek,
   onVolumeChange,
-  onToggleLoop,
-  onToggleShuffle,
 }: NowPlayingProps) => {
   if (!track) {
     return (
@@ -65,18 +56,6 @@ export const NowPlaying = ({
         {/* Controls */}
         <div className="flex flex-col items-center gap-2 flex-1">
           <div className="flex items-center gap-2 md:gap-4">
-            {/* Shuffle */}
-            <button
-              onClick={onToggleShuffle}
-              className={`p-2 rounded-full transition-colors ${shuffle
-                ? "text-primary bg-primary/10"
-                : "text-muted-foreground hover:text-foreground"
-                }`}
-              title="Shuffle"
-            >
-              <Shuffle className="h-4 w-4" />
-            </button>
-
             {/* Previous */}
             <button
               onClick={onPrevious}
@@ -99,29 +78,12 @@ export const NowPlaying = ({
               )}
             </button>
 
-            {/* Next */}
             <button
               onClick={onNext}
               className="text-muted-foreground transition-colors hover:text-foreground p-2"
               title="Next"
             >
               <SkipForward className="h-5 w-5" fill="currentColor" />
-            </button>
-
-            {/* Loop */}
-            <button
-              onClick={onToggleLoop}
-              className={`p-2 rounded-full transition-colors ${loopMode !== "none"
-                ? "text-primary bg-primary/10"
-                : "text-muted-foreground hover:text-foreground"
-                }`}
-              title={loopMode === "none" ? "Enable loop" : loopMode === "all" ? "Loop all" : "Loop one"}
-            >
-              {loopMode === "one" ? (
-                <Repeat1 className="h-4 w-4" />
-              ) : (
-                <Repeat className="h-4 w-4" />
-              )}
             </button>
           </div>
 

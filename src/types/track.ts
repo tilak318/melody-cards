@@ -6,6 +6,7 @@ export interface Track {
   duration: number; // in seconds
   coverUrl: string;
   audioUrl: string;
+  loopForever?: boolean; // if true, track will loop infinitely when played
 }
 
 export interface Album {
