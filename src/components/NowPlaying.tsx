@@ -88,7 +88,7 @@ export const NowPlaying = ({
           </div>
 
           {/* Progress Bar */}
-          <div className="hidden w-full max-w-md items-center gap-2 md:flex">
+          <div className="flex w-full max-w-md items-center gap-2">
             <span className="text-xs text-muted-foreground w-10 text-right">
               {formatTime(currentTime)}
             </span>

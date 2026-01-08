@@ -38,7 +38,7 @@ const Index = () => {
       <header className="relative z-10 px-4 pt-8 pb-6 md:pt-12 md:pb-8 md:px-8">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex items-center justify-center">
-            <h1 className="text-3xl md:text-4xl font-semibold gradient-text italic" style={{ fontFamily: "'Playfair Display', serif" }}>Akshardham Daily Rituals</h1>
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-semibold gradient-text italic whitespace-nowrap" style={{ fontFamily: "'Playfair Display', serif" }}>Akshardham Daily Rituals</h1>
           </div>
         </div>
       </header>
