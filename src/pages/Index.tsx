@@ -27,7 +27,7 @@ const Index = () => {
   const displayTracks = selectedAlbum ? selectedAlbum.tracks : tracks;
 
   return (
-    <div className="min-h-screen bg-background pb-28">
+    <div className="min-h-screen bg-background pb-40">
       {/* Background Gradient */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent blur-3xl" />

@@ -1,5 +1,4 @@
 import { Track } from "@/types/track";
-import { Play, Pause } from "lucide-react";
 
 interface TrackCardProps {
   track: Track;
@@ -22,13 +21,6 @@ export const TrackCard = ({ track, isActive, isPlaying, onPlay }: TrackCardProps
     >
       <div className="p-4 flex items-center justify-between h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="play-button h-10 w-10 flex-shrink-0">
-            {isActive && isPlaying ? (
-              <Pause className="h-5 w-5 text-primary-foreground" fill="currentColor" />
-            ) : (
-              <Play className="h-5 w-5 text-primary-foreground ml-0.5" fill="currentColor" />
-            )}
-          </div>
           <h3 className="font-semibold text-foreground">{track.title}</h3>
         </div>
         <span className="text-sm text-muted-foreground ml-4 flex-shrink-0">{formatDuration(track.duration)}</span>
