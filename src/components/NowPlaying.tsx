@@ -35,7 +35,7 @@ export const NowPlaying = ({
 }: NowPlayingProps) => {
   if (!track) {
     return (
-      <div className="glass fixed bottom-0 left-0 right-0 h-24 flex items-center justify-center border-t border-border">
+      <div className="glass fixed bottom-0 left-0 right-0 h-24 flex items-center justify-center border-t border-border z-50">
         <p className="text-muted-foreground">Select a track to play</p>
       </div>
     );
@@ -44,7 +44,7 @@ export const NowPlaying = ({
   const currentTime = (progress / 100) * (duration || track.duration);
 
   return (
-    <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up border-t border-border">
+    <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up border-t border-border z-50">
       <div className="mx-auto flex max-w-7xl items-center gap-4">
         {/* Track Info */}
         <div className="flex items-center gap-3 flex-1 min-w-0">

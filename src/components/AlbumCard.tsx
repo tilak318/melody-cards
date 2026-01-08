@@ -1,5 +1,4 @@
 import { Album } from "@/types/track";
-import { Folder } from "lucide-react";
 
 interface AlbumCardProps {
     album: Album;
@@ -14,10 +13,7 @@ export const AlbumCard = ({ album, onClick }: AlbumCardProps) => {
         >
             <div className="p-4 flex items-center justify-between h-full">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="h-10 w-10 flex-shrink-0 flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent">
-                        <Folder className="h-5 w-5 text-primary-foreground" />
-                    </div>
-                    <h3 className="font-semibold text-foreground">{album.title}</h3>
+                    <h3 className="font-semibold text-foreground truncate whitespace-nowrap">{album.title}</h3>
                 </div>
                 <span className="text-sm text-muted-foreground ml-4 flex-shrink-0">
                     {album.tracks.length} tracks

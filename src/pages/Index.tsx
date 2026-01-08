@@ -64,9 +64,9 @@ const Index = () => {
             </h2>
           )}
 
-          {/* Track Grid */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {displayTracks.map((track, index) => (
+          {/* All Cards Grid - Tracks and Albums combined */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+            {displayTracks.map((track) => (
               <div key={track.id}>
                 <TrackCard
                   track={track}
@@ -76,21 +76,12 @@ const Index = () => {
                 />
               </div>
             ))}
-          </div>
-
-          {/* Albums Section */}
-          {!selectedAlbum && (
-            <>
-              <h2 className="text-xl font-semibold text-foreground mt-12 mb-6">Albums</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {albums.map((album, index) => (
-                  <div key={album.id}>
-                    <AlbumCard album={album} onClick={setSelectedAlbum} />
-                  </div>
-                ))}
+            {!selectedAlbum && albums.map((album) => (
+              <div key={album.id}>
+                <AlbumCard album={album} onClick={setSelectedAlbum} />
               </div>
-            </>
-          )}
+            ))}
+          </div>
         </div>
       </main>
 

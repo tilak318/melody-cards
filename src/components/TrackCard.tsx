@@ -21,7 +21,7 @@ export const TrackCard = ({ track, isActive, isPlaying, onPlay }: TrackCardProps
     >
       <div className="p-4 flex items-center justify-between h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <h3 className="font-semibold text-foreground">{track.title}</h3>
+          <h3 className="font-semibold text-foreground truncate whitespace-nowrap">{track.title}</h3>
         </div>
         <span className="text-sm text-muted-foreground ml-4 flex-shrink-0">{formatDuration(track.duration)}</span>
       </div>
