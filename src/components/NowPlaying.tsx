@@ -45,7 +45,49 @@ export const NowPlaying = ({
 
   return (
     <div className="glass fixed bottom-0 left-0 right-0 px-4 py-3 md:px-8 animate-slide-up border-t border-border z-50">
-      <div className="mx-auto flex max-w-7xl items-center gap-4">
+      {/* Mobile Layout - Stacked */}
+      <div className="md:hidden flex flex-col gap-2">
+        {/* Top row: Title and Controls */}
+        <div className="flex items-center justify-between">
+          <h4 className="font-medium text-foreground truncate flex-1 mr-4">{track.title}</h4>
+          <div className="flex items-center gap-2">
+            <button onClick={onPrevious} className="text-muted-foreground p-1">
+              <SkipBack className="h-4 w-4" fill="currentColor" />
+            </button>
+            <button onClick={onTogglePlay} className="play-button h-10 w-10">
+              {isPlaying ? (
+                <Pause className="h-4 w-4 text-primary-foreground" fill="currentColor" />
+              ) : (
+                <Play className="h-4 w-4 text-primary-foreground ml-0.5" fill="currentColor" />
+              )}
+            </button>
+            <button onClick={onNext} className="text-muted-foreground p-1">
+              <SkipForward className="h-4 w-4" fill="currentColor" />
+            </button>
+          </div>
+        </div>
+        {/* Progress Bar Row */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground w-8 text-right">
+            {formatTime(currentTime)}
+          </span>
+          <div className="flex-1">
+            <Slider
+              value={[progress]}
+              max={100}
+              step={0.1}
+              onValueChange={(value) => onSeek(value[0])}
+              className="cursor-pointer"
+            />
+          </div>
+          <span className="text-xs text-muted-foreground w-8">
+            {formatTime(duration || track.duration)}
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop Layout - Horizontal */}
+      <div className="hidden md:flex mx-auto max-w-7xl items-center gap-4">
         {/* Track Info */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="min-w-0">
@@ -55,39 +97,21 @@ export const NowPlaying = ({
 
         {/* Controls */}
         <div className="flex flex-col items-center gap-2 flex-1">
-          <div className="flex items-center gap-2 md:gap-4">
-            {/* Previous */}
-            <button
-              onClick={onPrevious}
-              className="text-muted-foreground transition-colors hover:text-foreground p-2"
-              title="Previous"
-            >
+          <div className="flex items-center gap-4">
+            <button onClick={onPrevious} className="text-muted-foreground transition-colors hover:text-foreground p-2">
               <SkipBack className="h-5 w-5" fill="currentColor" />
             </button>
-
-            {/* Play/Pause */}
-            <button
-              onClick={onTogglePlay}
-              className="play-button h-12 w-12"
-              title={isPlaying ? "Pause" : "Play"}
-            >
+            <button onClick={onTogglePlay} className="play-button h-12 w-12">
               {isPlaying ? (
                 <Pause className="h-5 w-5 text-primary-foreground" fill="currentColor" />
               ) : (
                 <Play className="h-5 w-5 text-primary-foreground ml-0.5" fill="currentColor" />
               )}
             </button>
-
-            <button
-              onClick={onNext}
-              className="text-muted-foreground transition-colors hover:text-foreground p-2"
-              title="Next"
-            >
+            <button onClick={onNext} className="text-muted-foreground transition-colors hover:text-foreground p-2">
               <SkipForward className="h-5 w-5" fill="currentColor" />
             </button>
           </div>
-
-          {/* Progress Bar */}
           <div className="flex w-full max-w-md items-center gap-2">
             <span className="text-xs text-muted-foreground w-10 text-right">
               {formatTime(currentTime)}
@@ -108,7 +132,7 @@ export const NowPlaying = ({
         </div>
 
         {/* Volume */}
-        <div className="hidden items-center gap-2 flex-1 justify-end md:flex">
+        <div className="flex items-center gap-2 flex-1 justify-end">
           <Volume2 className="h-4 w-4 text-muted-foreground" />
           <Slider
             value={[volume * 100]}
