@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 20% 10%;
+    --background: 35 30% 97%;
+    --foreground: 25 30% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card: 35 25% 99%;
+    --card-foreground: 25 30% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover: 35 25% 99%;
+    --popover-foreground: 25 30% 12%;
 
-    --primary: 220 90% 56%;
+    --primary: 30 85% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 35 20% 95%;
+    --secondary-foreground: 25 30% 12%;
 
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 35 15% 92%;
+    --muted-foreground: 25 15% 45%;
 
-    --accent: 200 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 90% 55%;
+    --accent-foreground: 25 30% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 14% 90%;
-    --input: 220 14% 90%;
-    --ring: 220 90% 56%;
+    --border: 35 15% 88%;
+    --input: 35 15% 88%;
+    --ring: 30 85% 50%;
 
     --radius: 1rem;
 
-    /* Custom music player tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(220 90% 56%), hsl(200 100% 50%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14% 98%));
-    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(220 90% 56% / 0.1), transparent 70%);
-    --shadow-glow: 0 0 40px hsl(220 90% 56% / 0.25);
-    --shadow-card: 0 4px 20px hsl(220 20% 10% / 0.08);
-    --glass-bg: hsl(0 0% 100% / 0.9);
-    --glass-border: hsl(220 20% 10% / 0.06);
+    /* Custom music player tokens - Spiritual temple theme */
+    --gradient-primary: linear-gradient(135deg, hsl(30 85% 50%), hsl(45 90% 55%));
+    --gradient-card: linear-gradient(145deg, hsl(35 25% 99%), hsl(35 20% 96%));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(30 85% 50% / 0.1), transparent 70%);
+    --shadow-glow: 0 0 40px hsl(30 85% 50% / 0.25);
+    --shadow-card: 0 4px 20px hsl(25 30% 12% / 0.08);
+    --glass-bg: hsl(35 25% 99% / 0.9);
+    --glass-border: hsl(25 30% 12% / 0.06);
   }
 }
 
@@ -88,7 +88,7 @@
   }
 
   .track-card:hover {
-    box-shadow: 0 12px 40px hsl(220 20% 10% / 0.12);
+    box-shadow: 0 12px 40px hsl(25 30% 12% / 0.12);
     @apply ring-2 ring-primary/50;
   }
 
@@ -111,7 +111,7 @@
 
   .play-button:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 60px hsl(220 90% 56% / 0.35);
+    box-shadow: 0 0 60px hsl(30 85% 50% / 0.35);
   }
 
   .play-button:active {

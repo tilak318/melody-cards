@@ -27,7 +27,7 @@ const Index = () => {
   const displayTracks = selectedAlbum ? selectedAlbum.tracks : tracks;
 
   return (
-    <div className="min-h-screen bg-background pb-32 flex flex-col">
+    <div className="min-h-screen bg-background pb-28 flex flex-col">
       {/* Background Gradient */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent blur-3xl" />
@@ -35,10 +35,10 @@ const Index = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 px-4 py-6 md:px-8">
+      <header className="relative z-10 px-4 pt-4 pb-2 md:px-8">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex items-center justify-center">
-            <h1 className="text-2xl font-bold gradient-text">Akshardham Daily Rituals</h1>
+            <h1 className="text-3xl md:text-4xl font-semibold gradient-text italic" style={{ fontFamily: "'Playfair Display', serif" }}>Akshardham Daily Rituals</h1>
           </div>
         </div>
       </header>
