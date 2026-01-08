@@ -47,22 +47,19 @@ const Index = () => {
         {/* Main Content */}
         <main className="relative z-10 px-4 md:px-8">
           <div className="mx-auto max-w-[1600px]">
-            {/* Back Button */}
+            {/* Album Header - Title centered with back button on right */}
             {selectedAlbum && (
-              <button
-                onClick={() => setSelectedAlbum(null)}
-                className="mb-6 flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-              >
-                <ArrowLeft className="h-5 w-5" />
-                <span className="font-semibold">Back to Main</span>
-              </button>
-            )}
-
-            {/* Section Title */}
-            {selectedAlbum && (
-              <h2 className="text-xl font-semibold text-foreground mb-6">
-                {selectedAlbum.title}
-              </h2>
+              <div className="flex items-center justify-center mb-8 relative max-w-5xl mx-auto">
+                <h2 className="text-xl font-semibold text-foreground text-center">
+                  {selectedAlbum.title}
+                </h2>
+                <button
+                  onClick={() => setSelectedAlbum(null)}
+                  className="absolute right-0 p-2 text-primary hover:text-primary/80 transition-colors rounded-full hover:bg-primary/10"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+              </div>
             )}
 
             {/* All Cards Grid - Tracks and Albums combined */}
