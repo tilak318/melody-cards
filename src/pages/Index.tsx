@@ -27,7 +27,7 @@ const Index = () => {
   const displayTracks = selectedAlbum ? selectedAlbum.tracks : tracks;
 
   return (
-    <div className="bg-background min-h-screen" style={{ paddingBottom: '120px' }}>
+    <div className="bg-background min-h-screen flex flex-col" style={{ paddingBottom: '120px' }}>
       {/* Background Gradient */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent blur-3xl" />
@@ -52,17 +52,18 @@ const Index = () => {
             </h2>
             <button
               onClick={() => setSelectedAlbum(null)}
-              className="absolute right-0 p-2 text-primary bg-primary/10 hover:bg-primary/20 transition-colors rounded-full"
+              className="absolute right-0 px-3 py-2 text-primary bg-primary/10 hover:bg-primary/20 transition-colors rounded-full flex items-center gap-1"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-4 w-4" />
+              <span className="text-sm font-medium">Back</span>
             </button>
           </div>
         </div>
       )}
 
       {/* Main Content */}
-      <main className="relative z-10 px-4 md:px-8">
-        <div className="mx-auto max-w-[1600px]">
+      <main className={`relative z-10 px-4 md:px-8 ${!selectedAlbum ? 'flex-1 flex items-center' : ''}`}>
+        <div className={`mx-auto max-w-[1600px] ${!selectedAlbum ? 'w-full' : ''}`}>
 
           {/* All Cards Grid - Tracks and Albums combined */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
